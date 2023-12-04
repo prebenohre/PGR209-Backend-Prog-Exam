@@ -6,7 +6,10 @@
 
 2. Gå til  *"Order-System-For-Machine-Factory\src\main\java\no.kristiania.ordersystemformachinefactory",* og kjør *"OrderSystemForMachineFactoryApplication"*.
 
-4. Gå til http://localhost:8080/h2-console og logg inn med:
-    - URL: jdbc:h2:mem:machinefactorydb
+4. Gå til http://localhost:8080/h2-console og logg inn med følgende innstillinger og legitimasjon:
+    - Saved Settings: Generic H2 (Embedded)
+    - Setting name: Generic H2 (Embedded)
+    - Driver Class: org.h2.Driver
+    - JDBC URL: jdbc:h2:mem:machinefactorydb
     - Brukernavn: sa
     - Passord: [*INGEN PASSORD, LA VÆRE BLANKT*]
