@@ -6,13 +6,14 @@
 
 2. Gå til  *"Order-System-For-Machine-Factory\src\main\java\no.kristiania.ordersystemformachinefactory",* og kjør *"OrderSystemForMachineFactoryApplication"*.
 
-4. Gå til http://localhost:8080/h2-console og logg inn med følgende innstillinger og legitimasjon:
+3. Gå til http://localhost:8080/h2-console og logg inn med følgende innstillinger og legitimasjon, og trykk connect:
    - Saved Settings: Generic H2 (Embedded)
    - Setting name: Generic H2 (Embedded)
    - Driver Class: org.h2.Driver
    - JDBC URL: jdbc:h2:mem:machinefactorydb
    - Brukernavn: sa
    - Passord: [*INGEN PASSORD, LA VÆRE BLANKT*]
+4. Bruk Postman eller liknende verktøy for å teste API-et. Se under for eksempler på hvordan API-et kan brukes.
 
 ## TODO Sjekkliste
 
@@ -42,7 +43,12 @@
 
 **Funksjonalitet:**
 - [x] Controllers, Services, Repositories should be implemented for all domain objects,
-- [x] implement the following functionality for all domain objects: Get one by id, Get all with pagination, Create one, Delete one, Update one.
+- [ ] implement the following functionality for all domain objects: 
+   * - [x] Get one by id
+   * - [x] Create one
+   * - [x] Delete one
+   * - [x] Update one.
+   * - [ ] Get all with pagination
 
 
 **Tilleggsfunksjonalitet:**
