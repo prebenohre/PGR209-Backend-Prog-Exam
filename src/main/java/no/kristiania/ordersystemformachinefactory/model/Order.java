@@ -29,11 +29,17 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    // Endre fra @OneToMany til @ManyToMany
+    @ManyToMany
+    @JoinTable(
+            name = "order_machine",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "machine_id")
+    )
     private Set<Machine> machines = new HashSet<>();
 
     public Order(Date orderDate) {
         this.orderDate = orderDate;
     }
 }
+
