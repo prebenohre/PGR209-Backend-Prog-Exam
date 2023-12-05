@@ -30,6 +30,10 @@ public class Part {
 
     // Kan inkludere andre felt som pris, dimensjoner, etc. etter behov. Dette kan vi komme tilbake til senere.
 
+    @ManyToOne
+    @JoinColumn(name = "subassembly_id")
+    private Subassembly subassembly;
+
     public Part(String partName, String manufacturer, String specifications) {
         this.partName = partName;
         this.manufacturer = manufacturer;

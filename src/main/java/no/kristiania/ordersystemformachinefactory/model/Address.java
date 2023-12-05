@@ -20,6 +20,9 @@ public class Address {
     @Column(name = "address_id")
     private Long addressId = 0L;
 
+   @Column(name = "house_number")
+    private String houseNumber;
+
     @Column(name = "street")
     private String street;
 
@@ -35,7 +38,8 @@ public class Address {
     @ManyToMany(mappedBy = "addresses")
     private Set<Customer> customers = new HashSet<>();
 
-    public Address(String street, String city, String postalCode, String country) {
+    public Address(String houseNumber, String street, String city, String postalCode, String country) {
+        this.houseNumber = houseNumber;
         this.street = street;
         this.city = city;
         this.postalCode = postalCode;

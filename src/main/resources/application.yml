@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: dev # dev: laster inn testdata fra DataLoader, prod: laster ikke inn testdata.
+
   datasource:
     url: jdbc:h2:mem:machinefactorydb
     username: sa

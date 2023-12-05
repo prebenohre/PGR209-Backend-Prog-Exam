@@ -2,18 +2,20 @@
 
 ## Hvordan kjøre applikasjonen og logge inn i databasen
 
-1. Åpne IntelliJ eller din foretrukne IDE
+1. Åpne IntelliJ eller din foretrukne IDE.
 
-2. Gå til  *"Order-System-For-Machine-Factory\src\main\java\no.kristiania.ordersystemformachinefactory",* og kjør *"OrderSystemForMachineFactoryApplication"*.
+2. Gå til *"Order-System-For-Machine-Factory\src\main\resources\application.yml"*, og endre spring:profiles:active: til *"dev"* om du ønsker å laste inn testdata, eller *"prod"* om du ikke ønsker å laste inn testdata. 
 
-3. Gå til http://localhost:8080/h2-console og logg inn med følgende innstillinger og legitimasjon, og trykk connect:
+3. Gå til  *"Order-System-For-Machine-Factory\src\main\java\no.kristiania.ordersystemformachinefactory"*,  og kjør *"OrderSystemForMachineFactoryApplication"*.
+
+4. Gå til http://localhost:8080/h2-console og logg inn med følgende innstillinger og legitimasjon, og trykk connect:
    - Saved Settings: Generic H2 (Embedded)
    - Setting name: Generic H2 (Embedded)
    - Driver Class: org.h2.Driver
    - JDBC URL: jdbc:h2:mem:machinefactorydb
    - Brukernavn: sa
    - Passord: [*INGEN PASSORD, LA VÆRE BLANKT*]
-4. Bruk Postman eller liknende verktøy for å teste API-et. Se under for eksempler på hvordan API-et kan brukes.
+5. Bruk Postman eller liknende verktøy for å teste API-et. Se under for eksempler på hvordan API-et kan brukes.
 
 ## TODO Sjekkliste
 
@@ -38,17 +40,17 @@
 - [x] Customer must know about addresses, and addresses must know customers they belong to.
 - [x] Order must know about customers, and customers must know all their orders.
 - [x] Order must know about machines, but machines do not need to know what orders they are part of.
-- [x] Machines must know what subassemblies they require, subassemblies do not need to know what machin es they are a part of.
+- [x] Machines must know what subassemblies they require, subassemblies do not need to know what machines they are a part of.
 - [x] Subassemblies must know about parts, parts do not need to know what machines they are part of.
 
 **Funksjonalitet:**
 - [x] Controllers, Services, Repositories should be implemented for all domain objects,
 - [ ] implement the following functionality for all domain objects: 
-   * - [x] Get one by id
-   * - [x] Create one
-   * - [x] Delete one
+   * - [x] Get one by id.
+   * - [x] Create one.
+   * - [x] Delete one.
    * - [x] Update one.
-   * - [ ] Get all with pagination
+   * - [ ] Get all with pagination.
 
 
 **Tilleggsfunksjonalitet:**

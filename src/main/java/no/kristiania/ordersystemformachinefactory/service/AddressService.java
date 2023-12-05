@@ -37,6 +37,7 @@ public class AddressService {
     public Address updateAddress(Long id, Address updatedAddress) {
         return addressRepository.findById(id)
                 .map(address -> {
+                    address.setHouseNumber(updatedAddress.getHouseNumber());
                     address.setStreet(updatedAddress.getStreet());
                     address.setCity(updatedAddress.getCity());
                     address.setPostalCode(updatedAddress.getPostalCode());
