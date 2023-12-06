@@ -1,5 +1,7 @@
 package no.kristiania.ordersystemformachinefactory.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,10 +25,12 @@ public class Subassembly {
     @Column(name = "name")
     private String name;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "machine_id")
     private Machine machine;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "subassembly_id")
     private Set<Part> parts = new HashSet<>();
