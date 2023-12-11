@@ -41,6 +41,11 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.updateCustomer(id, customer));
     }
 
+    @GetMapping("/page/{pageNumber}")
+    public List<Customer> getCustomersByPage(@PathVariable int pageNumber){
+        return customerService.getCustomersPageable(pageNumber);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
