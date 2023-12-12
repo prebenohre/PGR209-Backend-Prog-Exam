@@ -1,8 +1,10 @@
 package no.kristiania.ordersystemformachinefactory.service;
 
+import no.kristiania.ordersystemformachinefactory.model.Machine;
 import no.kristiania.ordersystemformachinefactory.model.Subassembly;
 import no.kristiania.ordersystemformachinefactory.repository.SubassemblyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +48,9 @@ public class SubassemblyService {
                     updatedSubassembly.setSubassemblyId(id);
                     return subassemblyRepository.save(updatedSubassembly);
                 });
+    }
+
+    public List<Subassembly> getSubassembliesPageable(int pageNumber){
+        return subassemblyRepository.findAll(PageRequest.of(pageNumber, 10)).stream().toList();
     }
 }

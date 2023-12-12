@@ -1,8 +1,10 @@
 package no.kristiania.ordersystemformachinefactory.service;
 
+import no.kristiania.ordersystemformachinefactory.model.Machine;
 import no.kristiania.ordersystemformachinefactory.model.Order;
 import no.kristiania.ordersystemformachinefactory.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +48,9 @@ public class OrderService {
                     updatedOrder.setOrderId(id);
                     return orderRepository.save(updatedOrder);
                 });
+    }
+
+    public List<Order> getOrdersPageable(int pageNumber){
+        return orderRepository.findAll(PageRequest.of(pageNumber, 10)).stream().toList();
     }
 }

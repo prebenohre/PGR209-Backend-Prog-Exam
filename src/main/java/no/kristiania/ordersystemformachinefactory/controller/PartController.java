@@ -1,5 +1,6 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
+import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.model.Part;
 import no.kristiania.ordersystemformachinefactory.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,10 @@ public class PartController {
     public ResponseEntity<Void> deletePart(@PathVariable Long id) {
         partService.deletePart(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public List<Part> getPartsByPage(@PathVariable int pageNumber){
+        return partService.getPartsPageable(pageNumber);
     }
 }
