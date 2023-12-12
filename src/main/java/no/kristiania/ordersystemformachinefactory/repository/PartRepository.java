@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PartRepository extends JpaRepository<Part, Long> {
-    // Her kan du legge til eventuelle egendefinerte metoder
 }

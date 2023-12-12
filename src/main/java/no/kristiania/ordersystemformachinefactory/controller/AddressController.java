@@ -1,10 +1,9 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
 import no.kristiania.ordersystemformachinefactory.model.Address;
-import no.kristiania.ordersystemformachinefactory.model.Customer;
-import no.kristiania.ordersystemformachinefactory.repository.AddressRepository;
 import no.kristiania.ordersystemformachinefactory.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,11 +32,6 @@ public class AddressController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/page/{pageNumber}")
-    public List<Address> getAddressesByPage(@PathVariable int pageNumber){
-        return addressService.getAddressesPageable(pageNumber);
-    }
-
     @PostMapping
     public Address createAddress(@RequestBody Address address) {
         return addressService.saveAddress(address);
@@ -52,5 +46,13 @@ public class AddressController {
     public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
         addressService.deleteAddress(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity<Page<Address>> getAddressesByPage(
+            @PathVariable int pageNumber,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Address> page = addressService.getAddressesPageable(pageNumber, size);
+        return ResponseEntity.ok(page);
     }
 }

@@ -22,7 +22,7 @@
 ### Tekniske krav:
 - [x] Build REST-API Using Java and Spring Boot.
 - [x] Use Spring Data JPA and H2 in-memory database to persist all data.
-- [ ] Implement pagination for all endpoints that return lists.
+- [x] Implement pagination for all endpoints that return lists.
 - [ ] Use Flyway (Not required).
 - [ ] Make use og @SpringBootTest and @DataJpaTest Where necessary.
 - [ ] Unit tests.
@@ -45,12 +45,12 @@
 
 **Funksjonalitet:**
 - [x] Controllers, Services, Repositories should be implemented for all domain objects,
-- [ ] implement the following functionality for all domain objects: 
+- [x] implement the following functionality for all domain objects: 
    * - [x] Get one by id.
    * - [x] Create one.
    * - [x] Delete one.
    * - [x] Update one.
-   * - [ ] Get all with pagination.
+   * - [x] Get all with pagination.
 
 
 **Tilleggsfunksjonalitet:**

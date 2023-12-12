@@ -1,9 +1,9 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
-import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.model.Order;
 import no.kristiania.ordersystemformachinefactory.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +49,10 @@ public class OrderController {
     }
 
     @GetMapping("/page/{pageNumber}")
-    public List<Order> getOrdersByPage(@PathVariable int pageNumber){
-        return orderService.getOrdersPageable(pageNumber);
+    public ResponseEntity<Page<Order>> getOrdersByPage(
+            @PathVariable int pageNumber,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Order> page = orderService.getOrdersPageable(pageNumber, size);
+        return ResponseEntity.ok(page);
     }
 }

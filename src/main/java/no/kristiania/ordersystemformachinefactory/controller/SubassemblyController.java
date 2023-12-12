@@ -1,9 +1,9 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
-import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.model.Subassembly;
 import no.kristiania.ordersystemformachinefactory.service.SubassemblyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +49,10 @@ public class SubassemblyController {
     }
 
     @GetMapping("/page/{pageNumber}")
-    public List<Subassembly> getSubassembliesByPage(@PathVariable int pageNumber){
-        return subassemblyService.getSubassembliesPageable(pageNumber);
+    public ResponseEntity<Page<Subassembly>> getSubassembliesByPage(
+            @PathVariable int pageNumber,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Subassembly> page = subassemblyService.getSubassembliesPageable(pageNumber, size);
+        return ResponseEntity.ok(page);
     }
 }

@@ -3,6 +3,7 @@ package no.kristiania.ordersystemformachinefactory.controller;
 import no.kristiania.ordersystemformachinefactory.model.Machine;
 import no.kristiania.ordersystemformachinefactory.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,8 +48,11 @@ public class MachineController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/page/{pagenumber}")
-    public List<Machine> getMachinesByPage(@PathVariable int pagenumber){
-        return machineService.getMachinesPageable(pagenumber);
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity<Page<Machine>> getMachinesByPage(
+            @PathVariable int pageNumber,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Machine> page = machineService.getMachinesPageable(pageNumber, size);
+        return ResponseEntity.ok(page);
     }
 }

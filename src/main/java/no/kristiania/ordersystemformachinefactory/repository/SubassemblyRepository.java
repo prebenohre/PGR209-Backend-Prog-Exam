@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubassemblyRepository extends JpaRepository<Subassembly, Long> {
-    // Her kan du legge til eventuelle egendefinerte metoder
 }

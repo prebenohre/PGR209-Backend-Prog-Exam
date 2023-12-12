@@ -1,9 +1,9 @@
 package no.kristiania.ordersystemformachinefactory.service;
 
 import no.kristiania.ordersystemformachinefactory.model.Address;
-import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +52,7 @@ public class AddressService {
                 });
     }
 
-    public List<Address> getAddressesPageable(int pageNumber){
-        return addressRepository.findAll(PageRequest.of(pageNumber, 10)).stream().toList();
+    public Page<Address> getAddressesPageable(int pageNumber, int pageSize){
+        return addressRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 }

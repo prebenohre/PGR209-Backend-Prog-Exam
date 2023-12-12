@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MachineRepository extends JpaRepository<Machine, Long> {
-    // Her kan du legge til eventuelle egendefinerte metoder
 }

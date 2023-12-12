@@ -3,6 +3,7 @@ package no.kristiania.ordersystemformachinefactory.service;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,7 @@ public class CustomerService {
                 });
     }
 
-    public List<Customer> getCustomersPageable(int pageNumber){
-        return customerRepository.findAll(PageRequest.of(pageNumber, 10)).stream().toList();
+    public Page<Customer> getCustomersPageable(int pageNumber, int pageSize){
+        return customerRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 }

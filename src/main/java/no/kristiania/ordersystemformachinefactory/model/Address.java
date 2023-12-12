@@ -1,6 +1,7 @@
 package no.kristiania.ordersystemformachinefactory.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,9 +37,8 @@ public class Address {
     @Column(name = "country")
     private String country;
 
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "addresses")
-    @JsonBackReference
     private Set<Customer> customers = new HashSet<>();
 
     public Address(String houseNumber, String street, String city, String postalCode, String country) {

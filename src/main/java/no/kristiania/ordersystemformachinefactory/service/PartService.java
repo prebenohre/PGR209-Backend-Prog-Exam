@@ -1,9 +1,9 @@
 package no.kristiania.ordersystemformachinefactory.service;
 
-import no.kristiania.ordersystemformachinefactory.model.Machine;
 import no.kristiania.ordersystemformachinefactory.model.Part;
 import no.kristiania.ordersystemformachinefactory.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +50,7 @@ public class PartService {
                 });
     }
 
-    public List<Part> getPartsPageable(int pageNumber){
-        return partRepository.findAll(PageRequest.of(pageNumber, 10)).stream().toList();
+    public Page<Part> getPartsPageable(int pageNumber, int pageSize){
+        return partRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 }

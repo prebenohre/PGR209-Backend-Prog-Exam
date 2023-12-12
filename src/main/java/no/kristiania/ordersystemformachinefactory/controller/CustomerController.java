@@ -3,6 +3,7 @@ package no.kristiania.ordersystemformachinefactory.controller;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,14 +42,17 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.updateCustomer(id, customer));
     }
 
-    @GetMapping("/page/{pageNumber}")
-    public List<Customer> getCustomersByPage(@PathVariable int pageNumber){
-        return customerService.getCustomersPageable(pageNumber);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity<Page<Customer>> getCustomersByPage(
+            @PathVariable int pageNumber,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Customer> page = customerService.getCustomersPageable(pageNumber, size);
+        return ResponseEntity.ok(page);
     }
 }
