@@ -27,8 +27,9 @@ public class Machine {
     @Column(name = "manufacturer")
     private String manufacturer;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     @JoinColumn(name = "machine_id")
     private Set<Subassembly> subassemblies = new HashSet<>();
 

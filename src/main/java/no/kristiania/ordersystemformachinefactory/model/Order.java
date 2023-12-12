@@ -26,8 +26,8 @@ public class Order {
     @Column(name = "order_date")
     private Date orderDate;
 
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

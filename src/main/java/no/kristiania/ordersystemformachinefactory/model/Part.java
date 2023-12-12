@@ -31,8 +31,8 @@ public class Part {
 
     // Kan inkludere andre felt som pris, dimensjoner, etc. etter behov. Dette kan vi komme tilbake til senere.
 
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "subassembly_id")
     private Subassembly subassembly;
 

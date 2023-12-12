@@ -36,8 +36,9 @@ public class Address {
     @Column(name = "country")
     private String country;
 
-    @JsonBackReference
+
     @ManyToMany(mappedBy = "addresses")
+    @JsonBackReference
     private Set<Customer> customers = new HashSet<>();
 
     public Address(String houseNumber, String street, String city, String postalCode, String country) {

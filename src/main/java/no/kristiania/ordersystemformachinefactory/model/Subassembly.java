@@ -25,13 +25,14 @@ public class Subassembly {
     @Column(name = "name")
     private String name;
 
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "machine_id")
     private Machine machine;
 
-    @JsonManagedReference
+
     @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     @JoinColumn(name = "subassembly_id")
     private Set<Part> parts = new HashSet<>();
 

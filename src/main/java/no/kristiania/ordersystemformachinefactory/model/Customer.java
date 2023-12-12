@@ -31,8 +31,9 @@ public class Customer {
     @JoinColumn(name = "customer_id")
     private Set<Order> orders = new HashSet<>();
 
-    @JsonManagedReference
+
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(
             name = "customer_address",
             joinColumns = @JoinColumn(name = "customer_id"),
