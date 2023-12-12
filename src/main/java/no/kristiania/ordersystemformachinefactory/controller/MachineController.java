@@ -46,4 +46,9 @@ public class MachineController {
         machineService.deleteMachine(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/page/{pagenumber}")
+    public List<Machine> getMachinesByPage(@PathVariable int pagenumber){
+        return machineService.getMachinesPageable(pagenumber);
+    }
 }

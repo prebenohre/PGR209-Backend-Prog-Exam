@@ -1,5 +1,6 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
+import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.model.Subassembly;
 import no.kristiania.ordersystemformachinefactory.service.SubassemblyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,10 @@ public class SubassemblyController {
     public ResponseEntity<Void> deleteSubassembly(@PathVariable Long id) {
         subassemblyService.deleteSubassembly(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public List<Subassembly> getSubassembliesByPage(@PathVariable int pageNumber){
+        return subassemblyService.getSubassembliesPageable(pageNumber);
     }
 }
