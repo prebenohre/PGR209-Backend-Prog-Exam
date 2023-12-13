@@ -1,5 +1,6 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
+import no.kristiania.ordersystemformachinefactory.DTO.AddAddressToCustomerDto;
 import no.kristiania.ordersystemformachinefactory.DTO.CustomerWithAddressDto;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.service.CustomerService;
@@ -60,5 +61,11 @@ public class CustomerController {
     @PostMapping("/createWithAddress")
     public Customer createCustomerWithAddress(@RequestBody CustomerWithAddressDto dto) {
         return customerService.createCustomerWithAddress(dto.getCustomer(), dto.getAddress());
+    }
+
+    @PostMapping("/addNewAddress")
+    public ResponseEntity<Customer> addNewAddressToCustomer(@RequestBody AddAddressToCustomerDto dto) {
+        Customer updatedCustomer = customerService.addAddressToCustomer(dto.getCustomerId(), dto.getAddress());
+        return ResponseEntity.ok(updatedCustomer);
     }
 }

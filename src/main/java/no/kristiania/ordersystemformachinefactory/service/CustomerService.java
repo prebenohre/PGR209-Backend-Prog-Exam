@@ -69,4 +69,13 @@ public class CustomerService {
 
         return customerRepository.save(customer);
     }
+
+    public Customer addAddressToCustomer(Long customerId, Address newAddress) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Kunde ikke funnet"));
+
+        Address savedAddress = addressRepository.save(newAddress);
+        customer.getAddresses().add(savedAddress);
+        return customerRepository.save(customer);
+    }
 }

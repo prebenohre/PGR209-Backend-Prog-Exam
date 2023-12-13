@@ -56,7 +56,7 @@
 **Tilleggsfunksjonalitet:**
 - [x] Create a customer, and add an address to it
 - [x] Create an address and add it to a customer
-- [ ] Add an address to a customer.
+- [x] Add an address to a customer.
 
 **Frivillig Tilleggsfunksjonalitet:**
 - [ ] Create an order, and add a machine to it.
