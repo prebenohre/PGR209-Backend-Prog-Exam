@@ -1,6 +1,7 @@
 package no.kristiania.ordersystemformachinefactory.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,12 +27,13 @@ public class Order {
     @Column(name = "order_date")
     private Date orderDate;
 
+    @JsonIgnore
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     // Endre fra @OneToMany til @ManyToMany
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "order_machine",

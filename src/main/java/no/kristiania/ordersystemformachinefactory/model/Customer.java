@@ -1,5 +1,6 @@
 package no.kristiania.ordersystemformachinefactory.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,13 +28,13 @@ public class Customer {
     @Column(name = "customer_email")
     private String customerEmail;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Set<Order> orders = new HashSet<>();
 
-
+    @JsonIgnore
     @ManyToMany
-    @JsonManagedReference
     @JoinTable(
             name = "customer_address",
             joinColumns = @JoinColumn(name = "customer_id"),

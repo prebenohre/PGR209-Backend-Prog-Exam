@@ -2,6 +2,7 @@ package no.kristiania.ordersystemformachinefactory.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,8 +32,8 @@ public class Part {
 
     // Kan inkludere andre felt som pris, dimensjoner, etc. etter behov. Dette kan vi komme tilbake til senere.
 
+    @JsonIgnore
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "subassembly_id")
     private Subassembly subassembly;
 
