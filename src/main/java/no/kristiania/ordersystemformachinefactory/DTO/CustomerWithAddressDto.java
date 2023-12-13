@@ -1,0 +1,15 @@
+package no.kristiania.ordersystemformachinefactory.DTO;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import no.kristiania.ordersystemformachinefactory.model.Address;
+import no.kristiania.ordersystemformachinefactory.model.Customer;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class CustomerWithAddressDto {
+    private Customer customer;
+    private Address address;
+}

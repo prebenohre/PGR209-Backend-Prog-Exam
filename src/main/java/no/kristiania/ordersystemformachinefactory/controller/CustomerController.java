@@ -1,5 +1,6 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
+import no.kristiania.ordersystemformachinefactory.DTO.CustomerWithAddressDto;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,10 @@ public class CustomerController {
             @RequestParam(defaultValue = "10") int size) {
         Page<Customer> page = customerService.getCustomersPageable(pageNumber, size);
         return ResponseEntity.ok(page);
+    }
+
+    @PostMapping("/createWithAddress")
+    public Customer createCustomerWithAddress(@RequestBody CustomerWithAddressDto dto) {
+        return customerService.createCustomerWithAddress(dto.getCustomer(), dto.getAddress());
     }
 }
