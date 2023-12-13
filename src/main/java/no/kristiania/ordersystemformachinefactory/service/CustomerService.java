@@ -47,7 +47,7 @@ public class CustomerService {
                 .map(customer -> {
                     customer.setCustomerName(updatedCustomer.getCustomerName());
                     customer.setCustomerEmail(updatedCustomer.getCustomerEmail());
-                    customer.setAddresses(updatedCustomer.getAddresses()); // Anta at dette håndterer relasjoner korrekt
+                    customer.setAddresses(updatedCustomer.getAddresses());
                     return customerRepository.save(customer);
                 })
                 .orElseGet(() -> {
@@ -61,15 +61,12 @@ public class CustomerService {
     }
 
     public Customer createCustomerWithAddress(Customer customer, Address address) {
-        // Lagre adressen først
         Address savedAddress = addressRepository.save(address);
 
-        // Sett adressen til kunden
         Set<Address> addresses = new HashSet<>();
         addresses.add(savedAddress);
         customer.setAddresses(addresses);
 
-        // Lagre og returner kunden
         return customerRepository.save(customer);
     }
 }
