@@ -36,14 +36,15 @@ public class DataLoader {
                 addresses.add(addressRepository.save(address));
             }
 
-            // Generer og lagre kunder
-            List<Address> addressList = new ArrayList<>(addresses); // Konverter settet til en liste for enkel tilgang
+            // Generer og lagre kunder med matchende navn og e-postadresser
+            List<Address> addressList = new ArrayList<>(addresses);
             for (int i = 0; i < 50; i++) {
-                Customer customer = new Customer(
-                        faker.name().fullName(),
-                        faker.internet().emailAddress());
+                String firstName = faker.name().firstName();
+                String lastName = faker.name().lastName();
+                String email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@example.com";
 
-                // Velg en tilfeldig adresse fra listen og sett den for kunden
+                Customer customer = new Customer(firstName + " " + lastName, email);
+
                 Address randomAddress = addressList.get(faker.random().nextInt(addressList.size()));
                 Set<Address> customerAddresses = new HashSet<>();
                 customerAddresses.add(randomAddress);

@@ -24,7 +24,7 @@
 - [x] Use Spring Data JPA and H2 in-memory database to persist all data.
 - [x] Implement pagination for all endpoints that return lists.
 - [ ] Use Flyway (Not required).
-- [ ] Make use og @SpringBootTest and @DataJpaTest Where necessary.
+- [ ] Make use of @SpringBootTest and @DataJpaTest Where necessary.
 - [ ] Unit tests.
 - [ ] Integration tests using MockMvc.
 - [ ] End-to-end tests using MocMvc.
@@ -59,13 +59,10 @@
 - [x] Add an address to a customer.
 
 **Frivillig Tilleggsfunksjonalitet:**
-- [ ] Create an order, and add a machine to it.
-- [ ] Create a machine and add it to an order.
+- [ ] Add order to customer
 - [ ] Add a machine to an order.
 - [ ] Add a subassembly to a machine.
 - [ ] Add a part to a subassembly.
-- [ ] Add a part to a machine.
-- [ ] Add a subassembly to an order.
 
 ## Vurderingskriterier
 - F - The application does not include at least one model, repository, service, controller, or the application does not run.
