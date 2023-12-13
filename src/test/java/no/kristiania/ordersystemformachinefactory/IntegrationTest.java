@@ -21,4 +21,16 @@ public class IntegrationTest {
         mockMvc.perform(get("/machines"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    void getCustomersWorks() throws Exception{
+        mockMvc.perform(get("/customers"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    void postCustomerWithAdress() throws Exception{
+        mockMvc.perform(get("/customers"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }
