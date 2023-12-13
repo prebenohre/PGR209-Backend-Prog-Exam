@@ -61,8 +61,8 @@ public class DataLoader {
                 machine = machineRepository.save(machine);
 
                 for (int j = 0; j < 3; j++) {
-                    Subassembly subassembly = new Subassembly(
-                            faker.lorem().word());
+                    String subassemblyName = faker.commerce().material() + " " + faker.lorem().word();
+                    Subassembly subassembly = new Subassembly(subassemblyName);
                     subassembly.setMachine(machine);
                     subassembly = subassemblyRepository.save(subassembly);
 
@@ -71,7 +71,7 @@ public class DataLoader {
                                 faker.commerce().productName(),
                                 faker.company().name(),
                                 faker.lorem().sentence());
-                        part.setSubassembly(subassembly); // Tilordne delen til en undermontering
+                        part.setSubassembly(subassembly);
                         partRepository.save(part);
                     }
                 }
