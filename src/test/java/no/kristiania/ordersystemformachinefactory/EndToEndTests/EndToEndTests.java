@@ -1,4 +1,4 @@
-package no.kristiania.ordersystemformachinefactory;
+package no.kristiania.ordersystemformachinefactory.EndToEndTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -18,16 +17,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class IntegrationTest {
+public class EndToEndTests {
 
     @Autowired
     MockMvc mockMvc;
 
     @Autowired
     ObjectMapper objectMapper;
-
-
-
 
 
     @Test
