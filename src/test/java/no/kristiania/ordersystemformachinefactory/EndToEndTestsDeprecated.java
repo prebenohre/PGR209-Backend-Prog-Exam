@@ -1,7 +1,10 @@
+/*
 package no.kristiania.ordersystemformachinefactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.kristiania.ordersystemformachinefactory.repository.CustomerRepository;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +21,8 @@ public class EndToEndTestsDeprecated {
     @Autowired
     MockMvc mockMvc;
 
-    /*{
+    */
+/*{
     "customer":{
         "customerEmail": "John@John.com",
         "customerName": "John"
@@ -30,12 +34,14 @@ public class EndToEndTestsDeprecated {
         "postalCode": "83469",
         "country": "Yemen"
     }
-}*/
+}*//*
+
 
     private CustomerRepository customerRepository;
     @Autowired
     ObjectMapper objectMapper;
-    /*@Test
+    @Disabled
+    @Test
     void testCreateCustomer() throws Exception {
         mockMvc.perform(post("/customers/createWithAddress")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -61,14 +67,15 @@ public class EndToEndTestsDeprecated {
 
         List<Customer> customers = customerRepository.findAll();
         System.out.println("Customers in database: " + customers);
-    }*/
+    }
 
 
     //Dette er egentlig en integration test
 
 
     //Jobber videre med den senere
-    /*@Test
+    */
+/*@Test
     void testAddNewAddressToCustomer() throws Exception {
         // Create a customer with an initial address
         Customer newCustomer = new Customer();
@@ -105,5 +112,7 @@ public class EndToEndTestsDeprecated {
         mockMvc.perform(get("/addresses/1", createdCustomer.getCustomerId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.street").value("Gate")); // Initial address
-    }*/
+    }*//*
+
 }
+*/
