@@ -23,11 +23,11 @@
 - [x] Build REST-API Using Java and Spring Boot.
 - [x] Use Spring Data JPA and H2 in-memory database to persist all data.
 - [x] Implement pagination for all endpoints that return lists.
-- [ ] Use Flyway (Not required).
-- [ ] Make use of @SpringBootTest and @DataJpaTest Where necessary.
-- [ ] Unit tests.
-- [ ] Integration tests using MockMvc.
-- [ ] End-to-end tests using MocMvc.
+- [ ] ~~Use Flyway~~ (Not required) - *By this we assume that Flyway is not required to get top score and grading.*
+- [x] Make use of @SpringBootTest and @DataJpaTest Where necessary.
+- [x] Unit tests.
+- [x] Integration tests using MockMvc.
+- [x] End-to-end tests using MocMvc.
 
 ### Funksjonelle krav:
 
@@ -53,12 +53,12 @@
    * - [x] Get all with pagination.
 
 
-**Tilleggsfunksjonalitet:**
+**Tilleggsfunksjonalitet fra oppgaveteksten:**
 - [x] Create a customer, and add an address to it
 - [x] Create an address and add it to a customer
 - [x] Add an address to a customer.
 
-**Frivillig Tilleggsfunksjonalitet:**
+**Tilleggsfunksjonalitet vi har funnet på:**
 - [ ] Add order to customer
 - [ ] Add a machine to an order.
 - [ ] Add a subassembly to a machine.

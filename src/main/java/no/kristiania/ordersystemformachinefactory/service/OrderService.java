@@ -41,7 +41,7 @@ public class OrderService {
                 .map(order -> {
                     order.setOrderDate(updatedOrder.getOrderDate());
                     order.setCustomer(updatedOrder.getCustomer());
-                    order.setMachines(updatedOrder.getMachines()); // Pass på at dette håndterer relasjonene korrekt
+                    order.setMachines(updatedOrder.getMachines());
                     return orderRepository.save(order);
                 })
                 .orElseGet(() -> {

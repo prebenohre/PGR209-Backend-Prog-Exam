@@ -1,11 +1,10 @@
 package no.kristiania.ordersystemformachinefactory.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -15,7 +14,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "orders") // "order" er et reservert ord i mange SQL-dialekter, derfor må vi bruke "orders"
+@Table(name = "orders")
 
 public class Order {
     @Id

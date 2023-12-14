@@ -1,12 +1,10 @@
 package no.kristiania.ordersystemformachinefactory.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,5 +38,4 @@ public class Subassembly {
     public Subassembly(String name) {
         this.name = name;
     }
-
 }
