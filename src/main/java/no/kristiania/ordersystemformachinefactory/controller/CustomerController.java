@@ -2,6 +2,7 @@ package no.kristiania.ordersystemformachinefactory.controller;
 
 import no.kristiania.ordersystemformachinefactory.DTO.AddAddressToCustomerDto;
 import no.kristiania.ordersystemformachinefactory.DTO.CustomerWithAddressDto;
+import no.kristiania.ordersystemformachinefactory.model.Address;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/customers")
@@ -67,5 +69,15 @@ public class CustomerController {
     public ResponseEntity<Customer> addNewAddressToCustomer(@RequestBody AddAddressToCustomerDto dto) {
         Customer updatedCustomer = customerService.addAddressToCustomer(dto.getCustomerId(), dto.getAddress());
         return ResponseEntity.ok(updatedCustomer);
+    }
+
+    @GetMapping("/{id}/addresses")
+    public ResponseEntity<Set<Address>> getCustomerAddress(@PathVariable Long id){
+        try{
+            Set<Address> customerAddresses = customerService.getCustomerAddresses(id);
+            return ResponseEntity.ok(customerAddresses);
+        } catch (RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 }

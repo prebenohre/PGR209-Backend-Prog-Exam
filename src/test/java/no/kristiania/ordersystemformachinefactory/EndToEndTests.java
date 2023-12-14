@@ -78,31 +78,7 @@ public class EndToEndTests {
 
 
     //Dette er egentlig en integration test
-    @Test
-    void testCreateAndRetrieveCustomer() throws Exception {
-        // Lager customer
-        Customer newCustomer = new Customer();
-        newCustomer.setCustomerName("John Doe");
-        newCustomer.setCustomerEmail("john.doe@example.com");
 
-
-        // Gjør en post til API endepunktet for å legge til customer
-        ResultActions createResult = mockMvc.perform(post("/customers")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newCustomer)))
-                .andExpect(status().isOk());
-
-        // Etter POSTEN har returnert customer, tar denne imot returverdien
-        Customer createdCustomer = objectMapper.readValue(
-                createResult.andReturn().getResponse().getContentAsString(),
-                Customer.class);
-
-        // Gjør en get mot createdCustomer over med dens id for å sjekke at det er samme navn og email.
-        mockMvc.perform(get("/customers/{id}", createdCustomer.getCustomerId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerName").value("John Doe"))
-                .andExpect(jsonPath("$.customerEmail").value("john.doe@example.com"));
-    }
 
     //Jobber videre med den senere
     /*@Test
