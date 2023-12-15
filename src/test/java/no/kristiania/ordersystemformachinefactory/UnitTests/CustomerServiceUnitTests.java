@@ -2,6 +2,7 @@ package no.kristiania.ordersystemformachinefactory.UnitTests;
 
 import no.kristiania.ordersystemformachinefactory.model.Address;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
+import no.kristiania.ordersystemformachinefactory.model.Order;
 import no.kristiania.ordersystemformachinefactory.repository.AddressRepository;
 import no.kristiania.ordersystemformachinefactory.repository.CustomerRepository;
 import no.kristiania.ordersystemformachinefactory.service.CustomerService;
@@ -68,24 +69,18 @@ public class CustomerServiceUnitTests {
         assert Objects.equals(customers.get(0).getAddresses().size(), 2);
     }
 
-
     @Test
-    @Disabled("Jeg får ikke denne til å funke")
-    void testCreateCustomerWithAddress(){
-        Customer customer = new Customer("Cus1", "Cus1@Gmail.com");
-        Address address = new Address("21", "Gate", "Tønsberg", "3121", "Norge");
+    void ShouldAddOrderToCustomer(){
+        List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@Gmail.com"));
 
-        List<Customer> customerList = List.of(customerService.createCustomerWithAddress(customer, address), new Customer("ds","ds"));
+        Set<Order> orders = new HashSet<>();
+        orders.add(new Order(new Date()));
+
+        customerList.get(0).setOrders(orders);
 
         when(customerRepository.findAll()).thenReturn(customerList);
+        var customers = customerRepository.findAll();
 
-        // Additional information for debugging
-        assertNotNull(customerList, "customerList should not be null");
-        assertNotNull(customerList.get(0).getCustomerId(), "Customer ID should not be null");
-
-        // Log the state for debugging
-        System.out.println("Created Customer: " + customerList.get(0));
-        System.out.println("Customer Addresses: " + customerList.get(0).getAddresses());
-
+        assert Objects.equals(customers.get(0).getOrders().size(), 1);
     }
 }
