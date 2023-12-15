@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +72,7 @@ public class CustomerService {
 
     public Customer addAddressToCustomer(Long customerId, Address newAddress) {
         Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Kunde ikke funnet"));
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         Address savedAddress = addressRepository.save(newAddress);
         customer.getAddresses().add(savedAddress);
@@ -87,7 +86,7 @@ public class CustomerService {
             Customer customer = optionalCustomer.get();
             return customer.getAddresses();
         } else {
-            throw new RuntimeException("Kunde ikke funnet");
+            throw new RuntimeException("customer not found");
         }
     }
 }
