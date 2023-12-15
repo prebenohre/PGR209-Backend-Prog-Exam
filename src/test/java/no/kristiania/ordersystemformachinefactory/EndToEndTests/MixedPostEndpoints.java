@@ -1,10 +1,8 @@
 package no.kristiania.ordersystemformachinefactory.EndToEndTests;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.kristiania.ordersystemformachinefactory.DTO.AddOrderToCustomerDto;
 import no.kristiania.ordersystemformachinefactory.model.*;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -57,8 +52,8 @@ public class MixedPostEndpoints {
 
         //Customer post
         ResultActions postCustomer = mockMvc.perform(post("/customers")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(customerThatOrders)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customerThatOrders)))
                 .andExpect(status().isOk());
 
         //Order post
@@ -101,8 +96,8 @@ public class MixedPostEndpoints {
         //Create order for customer
         //This means the customer now has an order placed on him
         ResultActions orderCreatedForCustomer = mockMvc.perform(post("/orders/createForCustomer")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(addOrderToCustomerDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(addOrderToCustomerDto)))
                 .andExpect(status().isOk());
 
         //Add part to subassembly
@@ -120,16 +115,16 @@ public class MixedPostEndpoints {
         Machine createdMachine = objectMapper.readValue(postMachine.andReturn().getResponse().getContentAsString(), Machine.class);
 
         mockMvc.perform(post("/machines/{id}/addSubassembly", createdMachine.getMachineId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(createdSubassembly)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(createdSubassembly)))
                 .andExpect(status().isOk());
 
         //Add the machine to the order
         Order orderToAddMachine = objectMapper.readValue(orderCreatedForCustomer.andReturn().getResponse().getContentAsString(), Order.class);
 
-        mockMvc.perform(post("/orders/{id}/addMachine" ,orderToAddMachine.getOrderId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(createdMachine)))
+        mockMvc.perform(post("/orders/{id}/addMachine", orderToAddMachine.getOrderId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(createdMachine)))
                 .andExpect(status().isOk());
     }
 }

@@ -6,7 +6,6 @@ import no.kristiania.ordersystemformachinefactory.model.Order;
 import no.kristiania.ordersystemformachinefactory.repository.AddressRepository;
 import no.kristiania.ordersystemformachinefactory.repository.CustomerRepository;
 import no.kristiania.ordersystemformachinefactory.service.CustomerService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.*;
 
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class CustomerServiceUnitTests {
@@ -28,7 +26,7 @@ public class CustomerServiceUnitTests {
     private AddressRepository addressRepository;
 
     @Test
-    void customerRepository_shouldGet2Customers_ToBeTrue(){
+    void customerRepository_shouldGet2Customers_ToBeTrue() {
         List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@G,ail.com"));
         when(customerRepository.findAll()).thenReturn(customerList);
 
@@ -37,7 +35,7 @@ public class CustomerServiceUnitTests {
     }
 
     @Test
-    void customerRepository_shouldGet3Customers_ToBeFalse(){
+    void customerRepository_shouldGet3Customers_ToBeFalse() {
         List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@G,ail.com"));
         when(customerRepository.findAll()).thenReturn(customerList);
 
@@ -46,7 +44,7 @@ public class CustomerServiceUnitTests {
     }
 
     @Test
-    void customerRepository_shouldGetFirsCustomerName_true(){
+    void customerRepository_shouldGetFirsCustomerName_true() {
         List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@G,ail.com"));
         when(customerRepository.findAll()).thenReturn(customerList);
 
@@ -55,7 +53,7 @@ public class CustomerServiceUnitTests {
     }
 
     @Test
-    void testAddAddressToCustomer(){
+    void testAddAddressToCustomer() {
         //Test setup
         List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@Gmail.com"));
         Set<Address> customer2Addresses = new HashSet<>();
@@ -70,7 +68,7 @@ public class CustomerServiceUnitTests {
     }
 
     @Test
-    void ShouldAddOrderToCustomer(){
+    void ShouldAddOrderToCustomer() {
         List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@Gmail.com"));
 
         Set<Order> orders = new HashSet<>();
