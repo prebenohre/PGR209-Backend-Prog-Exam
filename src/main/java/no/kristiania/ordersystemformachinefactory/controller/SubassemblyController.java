@@ -1,5 +1,6 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
+import no.kristiania.ordersystemformachinefactory.DTO.AddPartToSubassemblyDto;
 import no.kristiania.ordersystemformachinefactory.model.Subassembly;
 import no.kristiania.ordersystemformachinefactory.service.SubassemblyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,13 @@ public class SubassemblyController {
             @RequestParam(defaultValue = "10") int size) {
         Page<Subassembly> page = subassemblyService.getSubassembliesPageable(pageNumber, size);
         return ResponseEntity.ok(page);
+    }
+
+    @PostMapping("/{subassemblyId}/addPart")
+    public ResponseEntity<Subassembly> addPartToSubassembly(
+            @PathVariable Long subassemblyId,
+            @RequestBody AddPartToSubassemblyDto addPartToSubassemblyDto) {
+        Subassembly updatedSubassembly = subassemblyService.addPartToSubassembly(subassemblyId, addPartToSubassemblyDto);
+        return ResponseEntity.ok(updatedSubassembly);
     }
 }

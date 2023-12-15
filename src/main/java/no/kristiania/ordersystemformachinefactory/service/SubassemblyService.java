@@ -1,6 +1,9 @@
 package no.kristiania.ordersystemformachinefactory.service;
 
+import no.kristiania.ordersystemformachinefactory.DTO.AddPartToSubassemblyDto;
+import no.kristiania.ordersystemformachinefactory.model.Part;
 import no.kristiania.ordersystemformachinefactory.model.Subassembly;
+import no.kristiania.ordersystemformachinefactory.repository.PartRepository;
 import no.kristiania.ordersystemformachinefactory.repository.SubassemblyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,10 +17,12 @@ import java.util.Optional;
 public class SubassemblyService {
 
     private final SubassemblyRepository subassemblyRepository;
+    private final PartRepository partRepository;
 
     @Autowired
-    public SubassemblyService(SubassemblyRepository subassemblyRepository) {
+    public SubassemblyService(SubassemblyRepository subassemblyRepository, PartRepository partRepository) {
         this.subassemblyRepository = subassemblyRepository;
+        this.partRepository = partRepository;
     }
 
     public List<Subassembly> findAllSubassemblies() {
@@ -41,7 +46,7 @@ public class SubassemblyService {
                 .map(subassembly -> {
                     subassembly.setName(updatedSubassembly.getName());
                     subassembly.setMachine(updatedSubassembly.getMachine());
-                    subassembly.setParts(updatedSubassembly.getParts()); // Pass på at dette håndterer relasjonene korrekt
+                    subassembly.setParts(updatedSubassembly.getParts());
                     return subassemblyRepository.save(subassembly);
                 })
                 .orElseGet(() -> {
@@ -52,5 +57,16 @@ public class SubassemblyService {
 
     public Page<Subassembly> getSubassembliesPageable(int pageNumber, int pageSize){
         return subassemblyRepository.findAll(PageRequest.of(pageNumber, pageSize));
+    }
+
+    public Subassembly addPartToSubassembly(Long subassemblyId, AddPartToSubassemblyDto partDto) {
+        Subassembly subassembly = subassemblyRepository.findById(subassemblyId)
+                .orElseThrow(() -> new RuntimeException("Undermontering ikke funnet"));
+
+        Part newPart = new Part(partDto.getPartName(), partDto.getManufacturer(), partDto.getSpecifications());
+        newPart.setSubassembly(subassembly);
+        partRepository.save(newPart);
+
+        return subassembly;
     }
 }
