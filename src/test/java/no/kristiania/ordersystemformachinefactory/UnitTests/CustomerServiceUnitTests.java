@@ -75,7 +75,7 @@ public class CustomerServiceUnitTests {
         Customer customer = new Customer("Cus1", "Cus1@Gmail.com");
         Address address = new Address("21", "Gate", "Tønsberg", "3121", "Norge");
 
-        List<Customer> customerList = List.of(customerService.createCustomerWithAddress(customer, address));
+        List<Customer> customerList = List.of(customerService.createCustomerWithAddress(customer, address), new Customer("ds","ds"));
 
         when(customerRepository.findAll()).thenReturn(customerList);
 
