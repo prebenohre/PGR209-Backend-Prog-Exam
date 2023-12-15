@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -126,20 +127,9 @@ public class MixedPostEndpoints {
         //Add the machine to the order
         Order orderToAddMachine = objectMapper.readValue(orderCreatedForCustomer.andReturn().getResponse().getContentAsString(), Order.class);
 
-        ResultActions lastOrder = mockMvc.perform(post("/orders/{id}/addMachine" ,orderToAddMachine.getOrderId())
+        mockMvc.perform(post("/orders/{id}/addMachine" ,orderToAddMachine.getOrderId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createdMachine)))
                 .andExpect(status().isOk());
-
-        ResultActions customerToCheck = mockMvc.perform(get("/customers/{id}", createdCustomer.getCustomerId()))
-                .andExpect(status().isOk());
-
-        Order orderToTest = objectMapper.readValue(lastOrder.andReturn().getResponse().getContentAsString(), Order.class);
-        Customer customerToTest = objectMapper.readValue(customerToCheck.andReturn().getResponse().getContentAsString(), Customer.class);
-
-        List<Order> customerOrders = List.copyOf(customerToTest.getOrders());
     }
-
-
-
 }

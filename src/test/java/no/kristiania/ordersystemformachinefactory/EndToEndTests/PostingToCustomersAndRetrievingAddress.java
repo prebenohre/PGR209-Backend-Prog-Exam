@@ -71,6 +71,5 @@ public class PostingToCustomersAndRetrievingAddress {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].city").value("Shanelland"))
                 .andReturn();
-
     }
 }
