@@ -12,4 +12,9 @@ import java.util.Date;
 public class AddOrderToCustomerDto {
     private Date orderDate;
     private Long customerId;
+
+    public AddOrderToCustomerDto(Date orderDate, Long customerId){
+        this.customerId = customerId;
+        this.orderDate = orderDate;
+    }
 }
