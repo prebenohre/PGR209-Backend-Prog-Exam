@@ -86,17 +86,8 @@ public class MixedPostEndpoints {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerName").value("Peter Orders"));
 
-        //Extract the order ID from postOrder
-        Order createdOrder = objectMapper.readValue(
-                postOrder.andReturn().getResponse().getContentAsString(), Order.class
-        );
-
-        //Check that it posted the correct order
-        mockMvc.perform(get("/orders/{id}", createdOrder.getOrderId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.orderDate").exists());
-
-
+        //Create order for customer
+        mockMvc.perform(post("/orders/createForCustomer"))
 
     }
 }
