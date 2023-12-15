@@ -1,6 +1,7 @@
 package no.kristiania.ordersystemformachinefactory.service;
 
 import no.kristiania.ordersystemformachinefactory.model.Machine;
+import no.kristiania.ordersystemformachinefactory.model.Subassembly;
 import no.kristiania.ordersystemformachinefactory.repository.MachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,5 +53,13 @@ public class MachineService {
 
     public Page<Machine> getMachinesPageable(int pageNumber, int pageSize){
         return machineRepository.findAll(PageRequest.of(pageNumber, pageSize));
+    }
+
+    public Machine addSubassemblyToMachine(Long machineId, Subassembly subassembly) {
+        Machine machine = machineRepository.findById(machineId)
+                .orElseThrow(() -> new RuntimeException("Maskin ikke funnet"));
+
+        machine.getSubassemblies().add(subassembly);
+        return machineRepository.save(machine);
     }
 }

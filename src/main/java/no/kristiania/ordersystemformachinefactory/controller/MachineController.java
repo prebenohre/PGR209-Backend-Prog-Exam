@@ -1,6 +1,7 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
 import no.kristiania.ordersystemformachinefactory.model.Machine;
+import no.kristiania.ordersystemformachinefactory.model.Subassembly;
 import no.kristiania.ordersystemformachinefactory.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,5 +55,11 @@ public class MachineController {
             @RequestParam(defaultValue = "10") int size) {
         Page<Machine> page = machineService.getMachinesPageable(pageNumber, size);
         return ResponseEntity.ok(page);
+    }
+
+    @PostMapping("/{machineId}/addSubassembly")
+    public ResponseEntity<Machine> addSubassemblyToMachine(@PathVariable Long machineId, @RequestBody Subassembly subassembly) {
+        Machine updatedMachine = machineService.addSubassemblyToMachine(machineId, subassembly);
+        return ResponseEntity.ok(updatedMachine);
     }
 }
