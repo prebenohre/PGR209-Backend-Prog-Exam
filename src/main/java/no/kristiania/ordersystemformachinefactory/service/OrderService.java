@@ -1,7 +1,10 @@
 package no.kristiania.ordersystemformachinefactory.service;
 
+import no.kristiania.ordersystemformachinefactory.DTO.AddOrderToCustomerDto;
+import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.model.Machine;
 import no.kristiania.ordersystemformachinefactory.model.Order;
+import no.kristiania.ordersystemformachinefactory.repository.CustomerRepository;
 import no.kristiania.ordersystemformachinefactory.repository.MachineRepository;
 import no.kristiania.ordersystemformachinefactory.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +20,13 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final MachineRepository machineRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, MachineRepository machineRepository) {
+    public OrderService(OrderRepository orderRepository, MachineRepository machineRepository, CustomerRepository customerRepository) {
         this.orderRepository = orderRepository;
         this.machineRepository = machineRepository;
+        this.customerRepository = customerRepository;
     }
 
     public List<Order> findAllOrders() {
@@ -65,6 +70,17 @@ public class OrderService {
                 .orElseThrow(() -> new RuntimeException("Machine not found"));
 
         order.getMachines().add(machine);
+        return orderRepository.save(order);
+    }
+
+    public Order createOrderForCustomer(AddOrderToCustomerDto addOrderToCustomerDto) {
+        Customer customer = customerRepository.findById(addOrderToCustomerDto.getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        Order order = new Order();
+        order.setOrderDate(addOrderToCustomerDto.getOrderDate());
+        order.setCustomer(customer);
+
         return orderRepository.save(order);
     }
 }

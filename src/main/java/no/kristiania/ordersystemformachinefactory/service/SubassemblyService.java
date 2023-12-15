@@ -61,7 +61,7 @@ public class SubassemblyService {
 
     public Subassembly addPartToSubassembly(Long subassemblyId, AddPartToSubassemblyDto partDto) {
         Subassembly subassembly = subassemblyRepository.findById(subassemblyId)
-                .orElseThrow(() -> new RuntimeException("Undermontering ikke funnet"));
+                .orElseThrow(() -> new RuntimeException("Subassembly not found"));
 
         Part newPart = new Part(partDto.getPartName(), partDto.getManufacturer(), partDto.getSpecifications());
         newPart.setSubassembly(subassembly);

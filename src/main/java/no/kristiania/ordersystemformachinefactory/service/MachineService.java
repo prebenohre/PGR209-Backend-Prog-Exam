@@ -57,7 +57,7 @@ public class MachineService {
 
     public Machine addSubassemblyToMachine(Long machineId, Subassembly subassembly) {
         Machine machine = machineRepository.findById(machineId)
-                .orElseThrow(() -> new RuntimeException("Maskin ikke funnet"));
+                .orElseThrow(() -> new RuntimeException("Machine not found"));
 
         machine.getSubassemblies().add(subassembly);
         return machineRepository.save(machine);
