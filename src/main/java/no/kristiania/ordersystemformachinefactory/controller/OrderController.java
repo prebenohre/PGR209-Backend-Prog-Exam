@@ -1,5 +1,6 @@
 package no.kristiania.ordersystemformachinefactory.controller;
 
+import no.kristiania.ordersystemformachinefactory.DTO.AddMachineToOrderDto;
 import no.kristiania.ordersystemformachinefactory.model.Order;
 import no.kristiania.ordersystemformachinefactory.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,11 @@ public class OrderController {
             @RequestParam(defaultValue = "10") int size) {
         Page<Order> page = orderService.getOrdersPageable(pageNumber, size);
         return ResponseEntity.ok(page);
+    }
+
+    @PostMapping("/{id}/addMachine")
+    public ResponseEntity<Order> addMachineToOrder(@PathVariable Long id, @RequestBody AddMachineToOrderDto dto) {
+        Order updatedOrder = orderService.addMachineToOrder(id, dto.getMachineId());
+        return ResponseEntity.ok(updatedOrder);
     }
 }

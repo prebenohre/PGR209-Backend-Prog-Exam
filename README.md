@@ -59,10 +59,10 @@
 - [x] Add an address to a customer.
 
 **Tilleggsfunksjonalitet vi har funnet på:**
-- [ ] Add order to customer
-- [ ] Add a machine to an order.
+- [x] Add a machine to an order.
 - [ ] Add a subassembly to a machine.
 - [ ] Add a part to a subassembly.
+- [ ] Add order to customer
 
 ## Vurderingskriterier
 - F - The application does not include at least one model, repository, service, controller, or the application does not run.

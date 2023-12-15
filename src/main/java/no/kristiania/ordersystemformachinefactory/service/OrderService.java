@@ -1,6 +1,8 @@
 package no.kristiania.ordersystemformachinefactory.service;
 
+import no.kristiania.ordersystemformachinefactory.model.Machine;
 import no.kristiania.ordersystemformachinefactory.model.Order;
+import no.kristiania.ordersystemformachinefactory.repository.MachineRepository;
 import no.kristiania.ordersystemformachinefactory.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,10 +16,12 @@ import java.util.Optional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final MachineRepository machineRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, MachineRepository machineRepository) {
         this.orderRepository = orderRepository;
+        this.machineRepository = machineRepository;
     }
 
     public List<Order> findAllOrders() {
@@ -52,5 +56,15 @@ public class OrderService {
 
     public Page<Order> getOrdersPageable(int pageNumber, int pageSize){
         return orderRepository.findAll(PageRequest.of(pageNumber, pageSize));
+    }
+
+    public Order addMachineToOrder(Long orderId, Long machineId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        Machine machine = machineRepository.findById(machineId)
+                .orElseThrow(() -> new RuntimeException("Machine not found"));
+
+        order.getMachines().add(machine);
+        return orderRepository.save(order);
     }
 }
