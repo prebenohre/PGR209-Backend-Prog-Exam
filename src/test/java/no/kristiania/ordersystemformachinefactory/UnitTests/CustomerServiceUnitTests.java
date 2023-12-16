@@ -14,6 +14,8 @@ import java.util.*;
 
 import static org.mockito.Mockito.when;
 
+//Testkommentar
+
 @SpringBootTest
 public class CustomerServiceUnitTests {
     @MockBean
