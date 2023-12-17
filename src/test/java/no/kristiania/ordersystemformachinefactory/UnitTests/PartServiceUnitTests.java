@@ -1,13 +1,10 @@
 package no.kristiania.ordersystemformachinefactory.UnitTests;
 
-import no.kristiania.ordersystemformachinefactory.model.Order;
 import no.kristiania.ordersystemformachinefactory.model.Part;
 import no.kristiania.ordersystemformachinefactory.repository.PartRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
