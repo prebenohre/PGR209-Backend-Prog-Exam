@@ -5,41 +5,57 @@ import no.kristiania.ordersystemformachinefactory.repository.MachineRepository;
 import no.kristiania.ordersystemformachinefactory.service.MachineService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
-@DataJpaTest
+@SpringBootTest
 public class MachineServiceUnitTest {
-    @MockBean
-    private MachineRepository machineRepository;
 
     @Autowired
     private MachineService machineService;
 
+    @MockBean
+    private MachineRepository machineRepository;
 
     @Test
-    void machineServiceShouldAddAndRetrieveMachines(){
-        List<Machine> machineList = List.of(new Machine("Big Boy", "Steel Inc."), new Machine("Machine2", "Big Machines LLC."));
-        when(machineRepository.findAll()).thenReturn(machineList);
+    void shouldFindAllMachines() {
+        List<Machine> machines = List.of(new Machine("Model1", "Manufacturer1"), new Machine("Model2", "Manufacturer2"));
+        when(machineRepository.findAll()).thenReturn(machines);
 
-        var machines = machineRepository.findAll();
+        List<Machine> found = machineService.findAllMachines();
 
-        assert machines.size() == 2;
-
-        assert machines.get(0).getModelName() == "Big Boy";
+        assertNotNull(found);
+        assertEquals(2, found.size());
     }
 
     @Test
-    void shouldGetItemsFromRepo(){
-        ArrayList<Machine> machineArrayList = new ArrayList<>(List.of(new Machine("Cool Machine", "Machinemaker")));
+    void shouldFindMachineById() {
+        Machine machine = new Machine("Model1", "Manufacturer1");
+        when(machineRepository.findById(1L)).thenReturn(Optional.of(machine));
 
-        when(machineRepository.findAll()).thenReturn(machineArrayList);
+        Optional<Machine> found = machineService.findMachineById(1L);
 
-        assert machineService.findAllMachines().get(0).getModelName().equals("Cool Machine");
+        assertTrue(found.isPresent());
+        assertEquals("Model1", found.get().getModelName());
     }
+
+    @Test
+    void shouldSaveMachine() {
+        Machine machine = new Machine("Model1", "Manufacturer1");
+        when(machineRepository.save(any(Machine.class))).thenReturn(machine);
+
+        Machine saved = machineService.saveMachine(machine);
+
+        assertNotNull(saved);
+        assertEquals("Model1", saved.getModelName());
+    }
+
+    // Lignende tester for updateMachine og deleteMachine
 }

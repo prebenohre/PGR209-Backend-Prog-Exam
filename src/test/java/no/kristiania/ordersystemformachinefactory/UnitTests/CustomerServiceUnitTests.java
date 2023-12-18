@@ -3,9 +3,7 @@ package no.kristiania.ordersystemformachinefactory.UnitTests;
 import no.kristiania.ordersystemformachinefactory.model.Address;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
 import no.kristiania.ordersystemformachinefactory.model.Order;
-import no.kristiania.ordersystemformachinefactory.repository.AddressRepository;
 import no.kristiania.ordersystemformachinefactory.repository.CustomerRepository;
-import no.kristiania.ordersystemformachinefactory.service.CustomerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,12 +16,6 @@ import static org.mockito.Mockito.when;
 public class CustomerServiceUnitTests {
     @MockBean
     private CustomerRepository customerRepository;
-
-    @MockBean
-    private CustomerService customerService;
-
-    @MockBean
-    private AddressRepository addressRepository;
 
     @Test
     void customerRepository_shouldGet2Customers_ToBeTrue() {

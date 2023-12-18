@@ -29,7 +29,6 @@ public class Subassembly {
     @JoinColumn(name = "machine_id")
     private Machine machine;
 
-
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "subassembly_id")

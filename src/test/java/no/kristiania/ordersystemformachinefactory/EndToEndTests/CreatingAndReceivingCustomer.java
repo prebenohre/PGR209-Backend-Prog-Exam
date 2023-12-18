@@ -28,24 +28,23 @@ public class CreatingAndReceivingCustomer {
 
     @Test
     void testCreateAndRetrieveCustomer() throws Exception {
-        // Lager customer
+        // Create a customer object
         Customer newCustomer = new Customer();
         newCustomer.setCustomerName("John Doe");
         newCustomer.setCustomerEmail("john.doe@example.com");
 
-
-        // Gjør en post til API endepunktet for å legge til customer
+        // Make a post to the API endpoint to add customer
         ResultActions createResult = mockMvc.perform(post("/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCustomer)))
                 .andExpect(status().isOk());
 
-        // Etter POSTEN har returnert customer, tar denne imot returverdien
+        // After POST has returned customer, this receives the return value
         Customer createdCustomer = objectMapper.readValue(
                 createResult.andReturn().getResponse().getContentAsString(),
                 Customer.class);
 
-        // Gjør en get mot createdCustomer over med dens id for å sjekke at det er samme navn og email.
+        // Sends a get request to createdCustomer endpoint with its id to check if it is the same name and email
         mockMvc.perform(get("/customers/{id}", createdCustomer.getCustomerId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerName").value("John Doe"))

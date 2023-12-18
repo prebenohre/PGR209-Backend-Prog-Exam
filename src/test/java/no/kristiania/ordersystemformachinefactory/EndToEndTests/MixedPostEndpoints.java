@@ -22,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class MixedPostEndpoints {
 
-
     @Autowired
     MockMvc mockMvc;
 
@@ -43,7 +42,6 @@ public class MixedPostEndpoints {
         Machine machine = new Machine("CoolCool Machine", "Machine LLC.");
         //Part that will be added to the machine
         Part part = new Part("Cog", "Cogmakers", "Huge Cog");
-
 
         //Make the API call to the specified endpoints for each of the above
 

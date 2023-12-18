@@ -24,7 +24,7 @@ public class DataLoader {
         return args -> {
             Faker faker = new Faker();
 
-            // Generer og lagre adresser
+            // Generates and saves addresses
             Set<Address> addresses = new HashSet<>();
             for (int i = 0; i < 50; i++) {
                 Address address = new Address(
@@ -36,7 +36,7 @@ public class DataLoader {
                 addresses.add(addressRepository.save(address));
             }
 
-            // Generer og lagre kunder med matchende navn og e-postadresser
+            // Generates and saves customers with matching names and email addresses
             List<Address> addressList = new ArrayList<>(addresses);
             for (int i = 0; i < 50; i++) {
                 String firstName = faker.name().firstName();
@@ -53,7 +53,7 @@ public class DataLoader {
                 customerRepository.save(customer);
             }
 
-            // Generer og lagre maskiner, undermonteringer og deler
+            // Generates and saves machines, subassemblies and parts
             for (int i = 0; i < 50; i++) {
                 Machine machine = new Machine(
                         faker.commerce().productName(),
@@ -77,19 +77,24 @@ public class DataLoader {
                 }
             }
 
-            // Generer og lagre ordre med maskiner
+            // Generates and saves orders with machines
             List<Customer> customers = customerRepository.findAll();
             List<Machine> machines = machineRepository.findAll();
+
             for (int i = 0; i < customers.size(); i++) {
                 Order order = new Order(new Date());
                 order.setCustomer(customers.get(i % customers.size()));
 
-                // Velg et tilfeldig sett med maskiner og tilordne dem til ordren
-                Set<Machine> orderMachines = new HashSet<>();
-                for (int j = 0; j < faker.random().nextInt(1, machines.size()); j++) {
-                    orderMachines.add(machines.get(faker.random().nextInt(machines.size())));
+                // Only add machines to the order if the machines list is not empty
+                if (!machines.isEmpty()) {
+                    // Choose a random number of machines to add to the order
+                    Set<Machine> orderMachines = new HashSet<>();
+                    int numberOfMachinesToAdd = faker.random().nextInt(1, machines.size() + 1);
+                    for (int j = 0; j < numberOfMachinesToAdd; j++) {
+                        orderMachines.add(machines.get(faker.random().nextInt(machines.size())));
+                    }
+                    order.setMachines(orderMachines);
                 }
-                order.setMachines(orderMachines);
 
                 orderRepository.save(order);
             }
