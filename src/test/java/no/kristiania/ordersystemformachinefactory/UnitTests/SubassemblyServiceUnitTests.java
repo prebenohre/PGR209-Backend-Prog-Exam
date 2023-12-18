@@ -33,5 +33,7 @@ public class SubassemblyServiceUnitTests {
         assert subassemblies.size() == 4;
         assert subassemblies.size() != 5;
         System.out.println(subassemblies.size());
+
+
     }
 }

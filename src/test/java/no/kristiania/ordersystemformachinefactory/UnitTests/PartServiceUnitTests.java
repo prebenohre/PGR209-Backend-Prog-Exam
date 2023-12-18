@@ -5,7 +5,6 @@ import no.kristiania.ordersystemformachinefactory.repository.PartRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -17,7 +16,7 @@ public class PartServiceUnitTests {
     PartRepository partRepository;
 
     @Test
-    void shouldAddParts() {
+    void shouldAddParts(){
         Part part1 = new Part("Cog", "Cogmakers INC.", "Nice part to have!");
         Part part2 = new Part("Screw", "ScrewKings", "Screws made of non-recyclable material!");
         List<Part> partList = List.of(part1, part2);
