@@ -1,4 +1,4 @@
-package no.kristiania.ordersystemformachinefactory.EndToEndTests;
+package no.kristiania.ordersystemformachinefactory.E2ETests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
@@ -8,16 +8,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CreatingAndReceivingCustomer {
+public class CreatingAndReceivingCustomerE2ETest {
 
     @Autowired
     MockMvc mockMvc;
@@ -27,23 +26,20 @@ public class CreatingAndReceivingCustomer {
 
     @Test
     void testCreateAndRetrieveCustomer() throws Exception {
-        // Create a customer object
-        Customer newCustomer = new Customer();
-        newCustomer.setCustomerName("John Doe");
-        newCustomer.setCustomerEmail("john.doe@example.com");
+        // 01. Create a customer object
+        Customer newCustomer = new Customer("John Doe", "john.doe@example.com");
 
-        // Make a post to the API endpoint to add customer
-        ResultActions createResult = mockMvc.perform(post("/customers")
+        // 02. Make a post to the API endpoint to add customer
+        String response = mockMvc.perform(post("/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCustomer)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
 
-        // After POST has returned customer, this receives the return value
-        Customer createdCustomer = objectMapper.readValue(
-                createResult.andReturn().getResponse().getContentAsString(),
-                Customer.class);
+        // 03. After POST has returned customer, this receives the return value
+        Customer createdCustomer = objectMapper.readValue(response, Customer.class);
 
-        // Sends a get request to createdCustomer endpoint with its id to check if it is the same name and email
+        // 04. Sends a get request to createdCustomer endpoint with its id to check if it is the same name and email
         mockMvc.perform(get("/customers/{id}", createdCustomer.getCustomerId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerName").value("John Doe"))

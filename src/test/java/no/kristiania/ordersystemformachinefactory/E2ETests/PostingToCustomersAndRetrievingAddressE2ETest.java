@@ -1,6 +1,5 @@
-package no.kristiania.ordersystemformachinefactory.EndToEndTests;
+package no.kristiania.ordersystemformachinefactory.E2ETests;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.kristiania.ordersystemformachinefactory.repository.CustomerRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -19,12 +18,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PostingToCustomersAndRetrievingAddress {
-    @Autowired
-    MockMvc mockMvc;
+public class PostingToCustomersAndRetrievingAddressE2ETest {
 
     @Autowired
-    CustomerRepository customerRepository;
+    private MockMvc mockMvc;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @AfterEach
     void cleanup() {
@@ -33,42 +36,31 @@ public class PostingToCustomersAndRetrievingAddress {
 
     @Test
     void testCreateCustomer() throws Exception {
+        // 01. Create a customer and address object
+        String customerJson = "{ \"customer\": { \"customerEmail\": \"John@John.com\", \"customerName\": \"John\"}, \"address\": { \"houseNumber\": \"91856\", \"street\": \"Darin Ridge\", \"city\": \"Shanelland\", \"postalCode\": \"83469\", \"country\": \"Yemen\" }}";
+
+        // 02. Send a POST request to the API endpoint to add customer with address
         MvcResult result = mockMvc.perform(post("/customers/createWithAddress")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\n" +
-                                "    \"customer\":{\n" +
-                                "        \"customerEmail\": \"John@John.com\",\n" +
-                                "        \"customerName\": \"John\"\n" +
-                                "    },\n" +
-                                "    \"address\":{\n" +
-                                "        \"houseNumber\": \"91856\",\n" +
-                                "        \"street\": \"Darin Ridge\",\n" +
-                                "        \"city\": \"Shanelland\",\n" +
-                                "        \"postalCode\": \"83469\",\n" +
-                                "        \"country\": \"Yemen\"\n" +
-                                "    }\n" +
-                                "}"))
+                        .content(customerJson))
                 .andExpect(status().isOk())
-                .andDo(result1 -> {
-                    System.out.println(result1.getResponse().getContentAsString());
-                })
                 .andReturn();
 
         String responseBody = result.getResponse().getContentAsString();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(responseBody);
+        //03. Get customerId from response
+        Long customerId = objectMapper.readTree(responseBody).get("customerId").asLong();
 
-        Long customerId = jsonNode.get("customerId").asLong();
-
+        //04. Check that the customer is created correctly
         mockMvc.perform(get("/customers/{id}", customerId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerName").value("John"))
-                .andReturn();
+                .andExpect(jsonPath("$.customerName").value("John"));
 
+        //04. Check that the address is created correctly
         mockMvc.perform(get("/customers/{id}/addresses", customerId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].city").value("Shanelland"))
-                .andReturn();
+                .andExpect(jsonPath("$[0].city").value("Shanelland"));
     }
 }
+
+

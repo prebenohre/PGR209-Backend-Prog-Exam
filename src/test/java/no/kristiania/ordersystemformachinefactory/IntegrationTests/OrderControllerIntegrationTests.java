@@ -2,6 +2,8 @@ package no.kristiania.ordersystemformachinefactory.IntegrationTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import no.kristiania.ordersystemformachinefactory.model.Order;
+import no.kristiania.ordersystemformachinefactory.repository.OrderRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,6 +27,19 @@ public class OrderControllerIntegrationTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
+    private Long orderId;
+
+    @BeforeEach
+    public void setup() {
+        orderRepository.deleteAll();
+        Order testOrder = new Order(new Date());
+        Order savedOrder = orderRepository.save(testOrder);
+        orderId = savedOrder.getOrderId();
+    }
+
     @Test
     public void getAllOrders_ShouldReturnOk() throws Exception {
         mockMvc.perform(get("/orders"))
@@ -44,16 +59,14 @@ public class OrderControllerIntegrationTests {
 
     @Test
     public void getOrderById_ShouldReturnOrder() throws Exception {
-        long orderId = 1L;
         mockMvc.perform(get("/orders/" + orderId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.orderId", is((int) orderId)));
+                .andExpect(jsonPath("$.orderId", is(orderId.intValue())));
     }
 
     @Test
     public void updateOrder_ShouldReturnUpdatedOrder() throws Exception {
-        long orderId = 1L;
-        Order updatedOrder = new Order(new Date()); // Oppdaterer datoen
+        Order updatedOrder = new Order(new Date());
         mockMvc.perform(put("/orders/" + orderId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedOrder)))
@@ -63,7 +76,6 @@ public class OrderControllerIntegrationTests {
 
     @Test
     public void deleteOrder_ShouldReturnOk() throws Exception {
-        long orderId = 1L;
         mockMvc.perform(delete("/orders/" + orderId))
                 .andExpect(status().isOk());
     }
