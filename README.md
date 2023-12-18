@@ -63,4 +63,5 @@
 - [x] Add a subassembly to a machine.
 - [x] Add a part to a subassembly.
 - [x] Add order to customer.
-- [x] DataLoader for loading faker data in dev-mode (application.yml spring.profiles.active: dev).
+- [x] DataLoader-class for loading faker data in dev-mode (application.yml: spring.profiles.active: dev).
+- [x] Add additional information to get[Object]ByPage such as total pages, total elements, current page, and number of elements.

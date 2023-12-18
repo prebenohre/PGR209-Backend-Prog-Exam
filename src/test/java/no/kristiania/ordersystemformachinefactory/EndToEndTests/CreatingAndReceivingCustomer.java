@@ -25,7 +25,6 @@ public class CreatingAndReceivingCustomer {
     @Autowired
     ObjectMapper objectMapper;
 
-
     @Test
     void testCreateAndRetrieveCustomer() throws Exception {
         // Create a customer object
