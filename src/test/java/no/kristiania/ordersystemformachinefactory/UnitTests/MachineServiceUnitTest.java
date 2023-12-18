@@ -56,6 +56,4 @@ public class MachineServiceUnitTest {
         assertNotNull(saved);
         assertEquals("Model1", saved.getModelName());
     }
-
-    // Lignende tester for updateMachine og deleteMachine
 }

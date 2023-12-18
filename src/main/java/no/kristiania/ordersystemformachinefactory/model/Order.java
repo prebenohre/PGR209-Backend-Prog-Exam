@@ -31,7 +31,6 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    // Endre fra @OneToMany til @ManyToMany
     @JsonIgnore
     @ManyToMany
     @JoinTable(
