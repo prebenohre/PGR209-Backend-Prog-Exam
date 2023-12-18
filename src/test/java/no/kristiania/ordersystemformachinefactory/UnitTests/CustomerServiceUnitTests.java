@@ -2,75 +2,118 @@ package no.kristiania.ordersystemformachinefactory.UnitTests;
 
 import no.kristiania.ordersystemformachinefactory.model.Address;
 import no.kristiania.ordersystemformachinefactory.model.Customer;
-import no.kristiania.ordersystemformachinefactory.model.Order;
+import no.kristiania.ordersystemformachinefactory.repository.AddressRepository;
 import no.kristiania.ordersystemformachinefactory.repository.CustomerRepository;
+import no.kristiania.ordersystemformachinefactory.service.CustomerService;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class CustomerServiceUnitTests {
-    @MockBean
+    @Mock
     private CustomerRepository customerRepository;
 
+    @Mock
+    private AddressRepository addressRepository;
+
+    @InjectMocks
+    private CustomerService customerService;
+
     @Test
-    void customerRepository_shouldGet2Customers_ToBeTrue() {
-        List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@G,ail.com"));
+    void shouldGetCustomers() {
+        List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@Gmail.com"));
         when(customerRepository.findAll()).thenReturn(customerList);
 
-        var customers = customerRepository.findAll();
+        List<Customer> customers = customerService.findAllCustomers();
+
         assert customers.size() == 2;
+        assert "Cus1".equals(customers.get(0).getCustomerName());
+        assert "Cus2".equals(customers.get(1).getCustomerName());
     }
 
     @Test
-    void customerRepository_shouldGet3Customers_ToBeFalse() {
-        List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@G,ail.com"));
-        when(customerRepository.findAll()).thenReturn(customerList);
+    void shouldSaveCustomer() {
+        Customer newCustomer = new Customer("New Customer", "new@customer.com");
+        when(customerRepository.save(any(Customer.class))).thenReturn(newCustomer);
 
-        var customers = customerRepository.findAll();
-        assert customers.size() != 3;
+        Customer savedCustomer = customerService.saveCustomer(newCustomer);
+
+        assert "New Customer".equals(savedCustomer.getCustomerName());
     }
 
     @Test
-    void customerRepository_shouldGetFirsCustomerName_true() {
-        List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@G,ail.com"));
-        when(customerRepository.findAll()).thenReturn(customerList);
+    void shouldUpdateCustomer() {
+        Long customerId = 1L;
+        Customer existingCustomer = new Customer("Old Name", "old@customer.com");
+        existingCustomer.setCustomerId(customerId);
+        Customer updatedCustomer = new Customer("Updated Name", "updated@customer.com");
 
-        var customers = customerRepository.findAll();
-        assert Objects.equals(customers.get(0).getCustomerName(), "Cus1");
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(existingCustomer));
+        when(customerRepository.save(existingCustomer)).thenReturn(updatedCustomer);
+
+        Customer result = customerService.updateCustomer(customerId, updatedCustomer);
+
+        assert "Updated Name".equals(result.getCustomerName());
     }
 
     @Test
-    void testAddAddressToCustomer() {
-        //Test setup
-        List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@Gmail.com"));
-        Set<Address> customer2Addresses = new HashSet<>();
-        customer2Addresses.add(new Address("21", "Gate", "Tønsberg", "3121", "Norge"));
-        customer2Addresses.add(new Address("21", "Street", "Oslo", "0812", "Norge"));
-        customerList.get(0).setAddresses(customer2Addresses);
+    void shouldDeleteCustomer() {
+        Long customerId = 1L;
+        doNothing().when(customerRepository).deleteById(customerId);
 
-        when(customerRepository.findAll()).thenReturn(customerList);
+        customerService.deleteCustomer(customerId);
 
-        var customers = customerRepository.findAll();
-        assert Objects.equals(customers.get(0).getAddresses().size(), 2);
+        verify(customerRepository, times(1)).deleteById(customerId);
     }
 
     @Test
-    void ShouldAddOrderToCustomer() {
-        List<Customer> customerList = List.of(new Customer("Cus1", "Cus1@Gmail.com"), new Customer("Cus2", "Cus2@Gmail.com"));
+    void shouldFindCustomerById() {
+        Long customerId = 1L;
+        Customer customer = new Customer("Find Me", "findme@customer.com");
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
 
-        Set<Order> orders = new HashSet<>();
-        orders.add(new Order(new Date()));
+        Optional<Customer> foundCustomer = customerService.findCustomerById(customerId);
 
-        customerList.get(0).setOrders(orders);
+        assert foundCustomer.isPresent();
+        assert "Find Me".equals(foundCustomer.get().getCustomerName());
+    }
 
-        when(customerRepository.findAll()).thenReturn(customerList);
-        var customers = customerRepository.findAll();
+    @Test
+    void shouldCreateCustomerWithAddress() {
+        Customer customer = new Customer("Test Customer", "test@customer.com");
+        Address address = new Address("1", "Test Street", "Test City", "1234", "Test Country");
 
-        assert Objects.equals(customers.get(0).getOrders().size(), 1);
+        when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+        when(addressRepository.save(any(Address.class))).thenReturn(address);
+
+        Customer savedCustomer = customerService.createCustomerWithAddress(customer, address);
+
+        assert savedCustomer.getAddresses().contains(address);
+    }
+
+    @Test
+    void shouldAddAddressToExistingCustomer() {
+        Long customerId = 1L;
+        Customer existingCustomer = new Customer("Existing Customer", "existing@customer.com");
+        existingCustomer.setCustomerId(customerId);
+        Address newAddress = new Address("2", "New Street", "New City", "5678", "New Country");
+
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(existingCustomer));
+
+        existingCustomer.getAddresses().add(newAddress);
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(existingCustomer);
+
+        Customer updatedCustomer = customerService.addAddressToCustomer(customerId, newAddress);
+
+        assert updatedCustomer != null;
+        assert updatedCustomer.getAddresses().contains(newAddress);
     }
 }

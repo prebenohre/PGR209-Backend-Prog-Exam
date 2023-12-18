@@ -9,5 +9,4 @@ class OrderSystemForMachineFactoryApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
